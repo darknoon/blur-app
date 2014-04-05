@@ -19,6 +19,9 @@
 		49F9C1D118F0B77B00DDFAB1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F9C1B918F0B77B00DDFAB1 /* UIKit.framework */; };
 		49F9C1D918F0B77B00DDFAB1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49F9C1D718F0B77B00DDFAB1 /* InfoPlist.strings */; };
 		49F9C1DB18F0B77B00DDFAB1 /* BlurTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9C1DA18F0B77B00DDFAB1 /* BlurTests.m */; };
+		49F9C1E818F0B86600DDFAB1 /* DNBlurController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9C1E718F0B86600DDFAB1 /* DNBlurController.m */; };
+		49F9C1EA18F0BCA800DDFAB1 /* Hex.png in Resources */ = {isa = PBXBuildFile; fileRef = 49F9C1E918F0BCA800DDFAB1 /* Hex.png */; };
+		49F9C1ED18F0C49F00DDFAB1 /* DNBlurViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F9C1EC18F0C49F00DDFAB1 /* DNBlurViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,11 @@
 		49F9C1D618F0B77B00DDFAB1 /* BlurTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BlurTests-Info.plist"; sourceTree = "<group>"; };
 		49F9C1D818F0B77B00DDFAB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		49F9C1DA18F0B77B00DDFAB1 /* BlurTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlurTests.m; sourceTree = "<group>"; };
+		49F9C1E618F0B86600DDFAB1 /* DNBlurController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNBlurController.h; sourceTree = "<group>"; };
+		49F9C1E718F0B86600DDFAB1 /* DNBlurController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNBlurController.m; sourceTree = "<group>"; };
+		49F9C1E918F0BCA800DDFAB1 /* Hex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Hex.png; path = ../../../../Desktop/Hex.png; sourceTree = "<group>"; };
+		49F9C1EB18F0C49F00DDFAB1 /* DNBlurViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNBlurViewController.h; sourceTree = "<group>"; };
+		49F9C1EC18F0C49F00DDFAB1 /* DNBlurViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNBlurViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +117,11 @@
 			children = (
 				49F9C1C418F0B77B00DDFAB1 /* DNAppDelegate.h */,
 				49F9C1C518F0B77B00DDFAB1 /* DNAppDelegate.m */,
+				49F9C1EB18F0C49F00DDFAB1 /* DNBlurViewController.h */,
+				49F9C1EC18F0C49F00DDFAB1 /* DNBlurViewController.m */,
+				49F9C1E618F0B86600DDFAB1 /* DNBlurController.h */,
+				49F9C1E718F0B86600DDFAB1 /* DNBlurController.m */,
+				49F9C1E918F0BCA800DDFAB1 /* Hex.png */,
 				49F9C1C718F0B77B00DDFAB1 /* Images.xcassets */,
 				49F9C1BC18F0B77B00DDFAB1 /* Supporting Files */,
 			);
@@ -220,6 +233,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49F9C1EA18F0BCA800DDFAB1 /* Hex.png in Resources */,
 				49F9C1C018F0B77B00DDFAB1 /* InfoPlist.strings in Resources */,
 				49F9C1C818F0B77B00DDFAB1 /* Images.xcassets in Resources */,
 			);
@@ -240,8 +254,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49F9C1E818F0B86600DDFAB1 /* DNBlurController.m in Sources */,
 				49F9C1C618F0B77B00DDFAB1 /* DNAppDelegate.m in Sources */,
 				49F9C1C218F0B77B00DDFAB1 /* main.m in Sources */,
+				49F9C1ED18F0C49F00DDFAB1 /* DNBlurViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,6 @@
 
 @interface DNBlurController : NSObject
 
-- (void)blurImage:(UIImage *)image factor:(float)k completion:(void(^)(UIImage *))completion;
+- (int32_t)blurImage:(UIImage *)image factor:(float)k completion:(void(^)(UIImage *, int32_t compare))completion;
 
 @end

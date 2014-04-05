@@ -19,10 +19,8 @@
 	
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	self.window.rootViewController = vc;
+	self.window.tintColor = [UIColor orangeColor];
     [self.window makeKeyAndVisible];
-	
-	vc.view.backgroundColor = [UIColor greenColor];
-	
 	
     return YES;
 }

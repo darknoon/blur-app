@@ -67,19 +67,20 @@
 	return finalImage;
 }
 
-- (void)blurImage:(UIImage *)image factor:(float)k completion:(void(^)(UIImage *))completion
+- (int32_t)blurImage:(UIImage *)image factor:(float)k completion:(void(^)(UIImage *, int32_t compare))completion
 {
-	if (!completion) return;
-	uint32_t before = OSAtomicIncrement32(&_cancellation);
+	if (!completion) return 0;
+	uint32_t expected = OSAtomicIncrement32(&_cancellation);
 	dispatch_async(_queue, ^{
 		UIImage *retval = nil;
-		if (_cancellation == before) {
+		if (_cancellation == expected) {
 			retval = [self.class blurImage:image factor:k];
 		}
 		dispatch_async(dispatch_get_main_queue(), ^{
-			completion(retval);
+			completion(retval, expected);
 		});
 	});
+	return expected;
 }
 
 @end

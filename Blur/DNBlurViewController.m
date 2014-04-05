@@ -23,7 +23,9 @@
 	UIImageView *_iv;
 	UIImage *_source;
 	UIImage *_blurred;
+	UIActivityIndicatorView *_indicator;
 	BOOL _saving;
+	int32_t _lastEnqueued;
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -35,15 +37,14 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (!self) return nil;
-	
-	_source = [UIImage imageNamed:@"Hex"];
-	
+		
     return self;
 }
 
 - (void)_createBar
 {
 	_nb = [[UINavigationBar alloc] initWithFrame:CGRectZero];
+	_nb.barStyle = UIBarStyleBlack;
 	UINavigationItem *ni = [[UINavigationItem alloc] initWithTitle:@"Image"];
 	
 	UIBarButtonItem *openItem = [[UIBarButtonItem alloc] initWithTitle:@"Open"
@@ -67,9 +68,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-	[self _createBar];
 	
+	self.view.backgroundColor = [UIColor grayColor];
+	
+
 	_iv = [[UIImageView alloc] init];
 	_iv.frame = self.view.bounds;
 	_iv.image = _source;
@@ -77,22 +79,33 @@
 	_iv.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 	[self.view addSubview:_iv];
 	
+	_indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	[self.view addSubview:_indicator];
+	
 	_slider = [[UISlider alloc] initWithFrame:(CGRect){50, 400, 320-100, 30}];
+	_slider.alpha = 0.0;
 	_slider.value = 0.5;
 	[_slider addTarget:self action:@selector(amountChanged:) forControlEvents:UIControlEventValueChanged];
 	[self.view addSubview:_slider];
-		
+
+	[self _createBar];
+
 	_blur = [[DNBlurController alloc] init];
-	[self _enqueueWithFactor:_slider.value];
 }
 
 
 - (void)_enqueueWithFactor:(CGFloat)f
 {
-	[_blur blurImage:_source factor:f completion:^(UIImage *blurred) {
+	if (!_indicator.isAnimating) {
+		[_indicator startAnimating];
+	}
+	_lastEnqueued = [_blur blurImage:_source factor:f completion:^(UIImage *blurred, int32_t expected) {
 		if (blurred) {
 			_iv.image = blurred;
 			_blurred = blurred;
+			if (expected == _lastEnqueued) {
+				[_indicator stopAnimating];
+			}
 		}
 	}];	
 }
@@ -124,9 +137,10 @@
 		
 		UIImage *image = [UIImage imageWithCGImage: [rep fullResolutionImage]];
 		_source = image;
+		_slider.alpha = 1.0;
 		[self _enqueueWithFactor:_slider.value];
 		
-		[picker dismissViewControllerAnimated:YES completion:^{}];
+		[picker dismissViewControllerAnimated:YES completion:NULL];
 		
 	} failureBlock:^(NSError *err) {
 		
@@ -140,9 +154,7 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-	[picker dismissViewControllerAnimated:YES completion:^{
-		
-	}];
+	[picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark -
@@ -169,6 +181,9 @@
 - (void)viewWillLayoutSubviews
 {
 	CGRect bounds = self.view.bounds;
+
+	_indicator.center = (CGPoint){CGRectGetMidX(bounds), CGRectGetMidY(bounds)};
+	
 	[_nb setFrame:(CGRect){0, 0, bounds.size.width, 44.f}];
 }
 

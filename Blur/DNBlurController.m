@@ -31,16 +31,26 @@
 
 + (UIImage *)blurImage:(UIImage *)image factor:(float)k
 {
-	CIImage *ciImage = [[CIImage alloc] initWithCGImage:image.CGImage];
+	CIImage *inputImage = [[CIImage alloc] initWithCGImage:image.CGImage];
+	
+	CIFilter *clamp = [CIFilter filterWithName:@"CIAffineClamp"];
+	[clamp setValue:inputImage
+			 forKey:kCIInputImageKey];
+	[clamp setValue:[NSValue valueWithBytes:&CGAffineTransformIdentity objCType:@encode(CGAffineTransform)]
+			 forKey:kCIInputTransformKey];
+	
+	CIImage *clamped = [clamp valueForKey:kCIOutputImageKey];
 	
 	CIFilter *blur = [CIFilter filterWithName:@"CIGaussianBlur"];
 	NSAssert(blur, @"Couldn't make a blur filter");
 	
 	CGFloat kernelSize = MAX(image.size.width, image.size.height) * 0.1 * k;
 	
-	[blur setValue:ciImage forKey:@"inputImage"];
-	[blur setValue:@(kernelSize) forKey:@"inputRadius"];
-	CIImage *blurred = [blur valueForKey:@"outputImage"];
+	[blur setValue:clamped
+			forKey:kCIInputImageKey];
+	[blur setValue:@(kernelSize)
+			forKey:kCIInputRadiusKey];
+	CIImage *blurred = [blur valueForKey:kCIOutputImageKey];
 	
 
 	CGRect imr = (CGRect){CGPointZero, image.size};
